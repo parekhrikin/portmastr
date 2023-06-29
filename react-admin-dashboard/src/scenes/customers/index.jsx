@@ -34,7 +34,7 @@ const Rates = () => {
             (cust) => cust.id !== params.row.id
           );
           setCustList({ rates: updatedCusts });
-          fetch(`http://localhost:8080/customer/${params.row.id}`, { method: 'DELETE' })
+          fetch(`http://localhost:80/customer/${params.row.id}`, { method: 'DELETE' })
             .then(() => console.log('Delete successful'));
         };
 
@@ -56,7 +56,7 @@ const Rates = () => {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:8080/rates")
+    fetch("http://localhost:80/rates")
       .then((res) => res.json())
       .then((res) => {
         console.log(res);

@@ -1,7 +1,8 @@
 import { ColorModeContext, useMode} from './theme';
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Topbar from "./scenes/global/Topbar";
-import { Routes, Route } from "react-router-dom";
+import { Route, Routes } from 'react-router-dom';
+import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
 import Rates from "./scenes/rates";
@@ -17,35 +18,50 @@ import AddRate from "./scenes/addRate"
 // import Geography from "./scenes/geography";
 // import Calendar from "./scenes/calendar"
 
+import RequiredAuth from './components/RequiredAuth';
+import { useNavigate } from 'react-router-dom';
+import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+// import { Security } from '@okta/okta-react';
+import config from './okta/config';
+// import { LoginCallback, } from '@okta/okta-react';
+
+const oktaAuth = new OktaAuth(config.oidc);
+
  
 function App() {
-  const [theme, colorMode] = useMode();
+  // const [theme, colorMode] = useMode();
+
+  const navigate = useNavigate();
+  const restoreOriginalUri = (_oktaAuth, originalUri) => {
+    navigate(toRelativeUrl(originalUri || '/', window.location.origin));
+  };
+
   return (
-    <ColorModeContext.Provider value = {colorMode}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <div className="app">
-          <Sidebar />
-          <main className="content">
-            <Topbar />
+    <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/rates" element={<Rates />} />
-              <Route path="/customers" element={<Customers />} />
-              <Route path="/confirmedRates" element={<ConfirmedRates />} />
-              <Route path="/add" element={<AddRate />} />
-              {/* <Route path="/form" element={<Form />} /> */}
-              {/* <Route path="/bar" element={<Bar />} /> */}
-              {/* <Route path="/pie" element={<Pie />} /> */}
-              {/* <Route path="/line" element={<Line />} /> */}
-              {/* <Route path="/faq" element={<FAQ />} /> */}
-              {/* <Route path="/geography" element={<Geography />} /> */}
-              {/* <Route path="/calendar" element={<Calendar />} /> */}
+              <Route path="/" element={<RequiredAuth />}>
+                <Route path="" element={<Dashboard />} />
+                <Route path="/rates" element={<Rates />} />
+                <Route path="/customers" element={<Customers />} />
+                <Route path="/confirmedRates" element={<ConfirmedRates />} />
+                {/* <Route path="/add" element={<AddRate />} /> */}
+                <Route path="/logout" />
+              </Route>
+              <Route path="login/callback" element={<LoginCallback />} />
             </Routes>
-          </main>
-        </div>
-      </ThemeProvider>
-    </ColorModeContext.Provider>
+    </Security>
+    // <Router>
+    //   <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
+    //     <Route path="/login/callback" component={LoginCallback} />
+    //       <RequiredAuth>
+    //         <SecureRoute exact path="/" component={Dashboard} />
+    //         <SecureRoute path="/rates" component={Rates} />
+    //         <SecureRoute path="/confirmedRates" component={ConfirmedRates} />
+    //         <SecureRoute path="/customers" component={Customers} />
+    //         <SecureRoute path="/add" component={AddRate} />
+    //       </RequiredAuth>
+    //   </Security>
+    // </Router>
   );
 }
 
