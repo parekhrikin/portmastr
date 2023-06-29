@@ -153,7 +153,7 @@ public class FreightController {
 
 
         // Load your Ethereum account credentials
-        Credentials credentials = Credentials.create("105727f0e15cd889516fa9b231b114b28b2aef02cedacca493fe70e7a3016dac");
+        Credentials credentials = Credentials.create("");
 
 //        // Deploy your ERC20 contract
 //        String contractAddress = "";

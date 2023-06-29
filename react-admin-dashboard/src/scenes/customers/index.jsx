@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
-const Rates = () => {
+const Customers = () => {
   const [custList, setCustList] = useState({
     customers: []
   });
@@ -121,4 +121,4 @@ const Rates = () => {
 
 }
 
-export default Rates;
+export default Customers;
