@@ -12,10 +12,11 @@ const Dashboard = () => {
 
     const [tasks, setTasks] = useState(null);
     const { authState, oktaAuth } = useOktaAuth();
+    const accessToken = oktaAuth.getAccessToken();
 
     useEffect(() => {
         if (authState && authState.isAuthenticated) {
-            const accessToken = oktaAuth.getAccessToken();
+            
             fetch(`${baseURL}`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,

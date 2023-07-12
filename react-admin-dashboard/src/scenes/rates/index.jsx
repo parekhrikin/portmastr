@@ -1,6 +1,7 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridCheckboxSelectionModel, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
+import { useOktaAuth } from '@okta/okta-react';
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
@@ -14,6 +15,8 @@ const Rates = () => {
   const [selectionModel, setSelectionModel] = useState([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const { authState, oktaAuth } = useOktaAuth();
+  const accessToken = oktaAuth.getAccessToken();
 
   const columns = [
     { field: "id", headerName: "ID", flex: 1 },
@@ -58,12 +61,16 @@ const Rates = () => {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:80/rates")
+    fetch("http://localhost:80/rates", {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`
+      }
+    })
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
         setRateList({
-          rates: res
+          rates: [...res]
         });
         console.log(rateList);
       })
@@ -71,6 +78,7 @@ const Rates = () => {
         console.log("error...." + error);
       });
   }, []);
+
 
   return (
     <Box m="20px">
