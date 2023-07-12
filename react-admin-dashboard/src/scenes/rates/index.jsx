@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Modal, Button, TextField, Box, Typography, useTheme } from "@mui/material";
 import { DataGrid, GridCheckboxSelectionModel, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useOktaAuth } from '@okta/okta-react';
@@ -7,6 +7,8 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import React, { useState, useEffect } from "react";
 import Header from "../../components/Header";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+
 
 const Rates = () => {
   const [rateList, setRateList] = useState({
@@ -15,8 +17,7 @@ const Rates = () => {
   const [selectionModel, setSelectionModel] = useState([]);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const { authState, oktaAuth } = useOktaAuth();
-  const accessToken = oktaAuth.getAccessToken();
+
 
   const columns = [
     { field: "id", headerName: "ID", flex: 1 },
@@ -61,11 +62,7 @@ const Rates = () => {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:80/rates", {
-      headers: {
-        "Authorization": `Bearer ${accessToken}`
-      }
-    })
+    fetch("http://localhost:80/rates")
       .then((res) => res.json())
       .then((res) => {
         console.log(res);

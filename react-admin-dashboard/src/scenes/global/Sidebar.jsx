@@ -17,8 +17,6 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import { useNavigate } from 'react-router-dom';
-import { useOktaAuth } from '@okta/okta-react';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
     const theme = useTheme();
@@ -42,9 +40,6 @@ const Sidebar = () => {
     const colors = tokens(theme.palette.mode);
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [selected, setSelected] = useState("Dashboard");
-    const navigate = useNavigate();
-    const { oktaAuth } = useOktaAuth();
-    const logout = async () => oktaAuth.signOut();
 
     return (
         <Box
@@ -236,12 +231,6 @@ const Sidebar = () => {
                             setSelected={setSelected}
                         />
                     </Box>
-                    <MenuItem 
-                        key="/logout"
-                        onClick={logout}
-                        icon={<LogoutRoundedIcon />}> 
-                            Logout 
-                    </MenuItem>
                 </Menu>
             </ProSidebar>
 
