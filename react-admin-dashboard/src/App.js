@@ -24,6 +24,7 @@ import RequiredAuth from './components/RequiredAuth';
 function App() {
   // const [theme, colorMode] = useMode();
 
+
   return (
     <Routes>
       <Route path="/" element={<RequiredAuth />}>
@@ -35,18 +36,6 @@ function App() {
         <Route path="/logout" />
       </Route>
     </Routes>
-// <Router> 
-//   <Security oktaAuth={oktaAuth} restoreOriginalUri={restoreOriginalUri}>
-//     <Route path="/login/callback" component={LoginCallback} />
-//       <RequiredAuth>
-//         <SecureRoute exact path="/" component={Dashboard} />
-//         <SecureRoute path="/rates" component={Rates} />
-//         <SecureRoute path="/confirmedRates" component={ConfirmedRates} />
-//         <SecureRoute path="/customers" component={Customers} />
-//         <SecureRoute path="/add" component={AddRate} />
-//       </RequiredAuth>
-//   </Security>
-// </Router>
 );
 
 };
