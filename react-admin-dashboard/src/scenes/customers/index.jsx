@@ -16,14 +16,16 @@ const Customers = () => {
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "name", headerName: "Name", cellClassName: "name-column--cell", flex: 1 },
-    { field: "poc", headerName: "Point of Contact", flex: 1 },
-    { field: "email", headerName: "Email", flex: 1 },
-    { field: "phone", headerName: "Phone Number", flex: 1 },
-    { field: "address", headerName: "Address", flex: 1 },
-    { field: "city", headerName: "City", flex: 1 },
-    { field: "zip", headerName: "Zip Code", flex: 1 },
-    { field: "onboardDate", headerName: "Onboarded" },
+    { field: "companyName", headerName: "Company Name", cellClassName: "name-column--cell", flex: 1 },
+    { field: "userType", headerName: "User Type", flex: 0.5 },
+    { field: "firstName", headerName: "First Name", flex: 0.5 },
+    { field: "lastName", headerName: "Last Name", flex: 0.5 },
+    { field: "emailAddress", headerName: "Email", flex: 1.5 },
+    { field: "phoneNumber", headerName: "Phone Number", flex: 1 },
+    // { field: "address", headerName: "Address", flex: 1 },
+    // { field: "city", headerName: "City", flex: 1 },
+    // { field: "zip", headerName: "Zip Code", flex: 1 },
+    // { field: "onboardDate", headerName: "Onboarded" },
     {
       field: "actions",
       headerName: "Actions",
@@ -33,8 +35,8 @@ const Customers = () => {
           const updatedCusts = custList.customers.filter(
             (cust) => cust.id !== params.row.id
           );
-          setCustList({ rates: updatedCusts });
-          fetch(`http://localhost:80/customer/${params.row.id}`, { method: 'DELETE' })
+          setCustList({ customers: updatedCusts });
+          fetch(`http://localhost:8080/user/${params.row.id}`, { method: 'DELETE' })
             .then(() => console.log('Delete successful'));
         };
 
@@ -56,23 +58,27 @@ const Customers = () => {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:80/rates")
+    fetch("http://localhost:8080/user/users")
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
-        setRateList({
-          rates: res
-        });
-        console.log(rateList);
+        const updatedCusts = res.filter(
+          (user) => user.userType === "importer" || user.userType === "exporter"
+        );
+        console.log(updatedCusts);
+        setCustList({ customers: updatedCusts });
+        console.log(custList);
       })
       .catch((error) => {
         console.log("error...." + error);
       });
   }, []);
 
+  console.log(custList);
+
   return (
     <Box m="20px">
-      <Header title="Rates" subtitle="View All The Rates" />
+      <Header title="Customers" subtitle="View All The Customers" />
       <Box
         m="40px 0 0 0"
         height="75vh"

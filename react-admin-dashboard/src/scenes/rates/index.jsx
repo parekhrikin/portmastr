@@ -58,12 +58,12 @@ const Rates = () => {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:80/rates")
+    fetch("http://localhost:8080/rates")
       .then((res) => res.json())
       .then((res) => {
         console.log(res);
         setRateList({
-          rates: [...res]
+          rates: res
         });
         console.log(rateList);
       })

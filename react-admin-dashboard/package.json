@@ -19,8 +19,6 @@
     "@nivo/geo": "^0.80.0",
     "@nivo/line": "^0.79.1",
     "@nivo/pie": "^0.80.0",
-    "@okta/okta-auth-js": "^7.3.0",
-    "@okta/okta-react": "^6.7.0",
     "@reduxjs/toolkit": "^1.8.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
@@ -35,6 +33,7 @@
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.14.1",
     "react-scripts": "5.0.1",
+    "redux-persist": "^6.0.0",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
