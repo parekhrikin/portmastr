@@ -125,6 +125,13 @@ public class FreightController {
 
     }
 
+    @PostMapping("/quote")
+    public ResponseEntity quote(@RequestBody JsonNode quote, @RequestHeader HttpHeaders requestHeaders) {
+
+        return ResponseEntity.ok("Quoted");
+
+    }
+
     @GetMapping("/getClientVersion")
     public ResponseEntity getClientVersion(@RequestHeader HttpHeaders headers) throws IOException, ExecutionException, InterruptedException {
         if (!validateToken(headers.get(HttpHeaders.AUTHORIZATION))) {

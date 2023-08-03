@@ -27,16 +27,19 @@ function App() {
 
 
   return (
+    
             <Routes>
               <Route path="/" element={<RequiredAuth />}>
-                <Route path="" element={<Dashboard />} />
-                <Route path="/rates" element={<Rates />} />
-                <Route path="/customers" element={<Customers />} />
-                <Route path="/confirmedRates" element={<ConfirmedRates />} />
-                <Route path="/add" element={<AddRate />} />
-                <Route path="/logout" />
+              
+                      <Route path="/" element={<Dashboard />} />
+                      <Route path="/rates" element={<Rates />} />
+                      <Route path="/customers" element={<Customers />} />
+                      <Route path="/confirmedRates" element={<ConfirmedRates />} />
+                      <Route path="/add" element={<AddRate />} />
+                    
               </Route>
             </Routes>
+            
   );
 }
 
