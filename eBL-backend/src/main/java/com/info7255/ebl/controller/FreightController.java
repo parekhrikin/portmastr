@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.hash.Hashing;
 import com.info7255.ebl.MyToken;
 import com.info7255.ebl.repository.FreightDAO;
+import com.info7255.ebl.service.QuoteService;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONObject;
@@ -38,6 +39,9 @@ public class FreightController {
     private FreightDAO dao;
     static ObjectMapper mapper = new ObjectMapper();
     static String jws;
+
+    @Autowired
+    private QuoteService quoteService;
 
 
     @PostMapping("/schema")
@@ -127,6 +131,10 @@ public class FreightController {
 
     @PostMapping("/quote")
     public ResponseEntity quote(@RequestBody JsonNode quote, @RequestHeader HttpHeaders requestHeaders) {
+
+
+
+        quoteService.quote(quote);
 
         return ResponseEntity.ok("Quoted");
 

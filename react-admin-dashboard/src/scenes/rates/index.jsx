@@ -20,6 +20,7 @@ const Rates = () => {
     customers: []
   });
   const [openDialog, setOpenDialog] = useState(false);
+  const [selectedRowId, setSelectedRowId] = useState(null);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -49,7 +50,8 @@ const Rates = () => {
             .then(() => console.log('Delete successful'));
         };
 
-        const handleQuote = () => {
+        const handleQuote = (rowID) => {
+          setSelectedRowId(rowID);
           setOpenDialog(true);
         };
 
@@ -60,7 +62,7 @@ const Rates = () => {
         return (
           <Box>
           <IconButton
-            onClick={handleQuote}
+            onClick={() => handleQuote(params.row.id)}
             color="primary"
             aria-label="quote"
           >
@@ -82,21 +84,21 @@ const Rates = () => {
               {custList.customers.length > 0 ? (
                 <Formik
                   initialValues={{
-                    name: '',
+                    customerID: '',
                     note: '',
                     sellRate20: '',
                     sellRate40: '',
                     sellRate40HQ: '',
                   }}
                   onSubmit={(values) => {
-                    console.log(values);
+                    console.log(selectedRowId);
                     // Handle form submission
                     fetch('http://localhost:8080/quote', {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
                       },
-                      body: JSON.stringify({...values, ["rateID"]: params.row.id})
+                      body: JSON.stringify({...values, ["rateID"]: selectedRowId})
                     })
                     .then(response => {
                       console.log(response.json());
@@ -125,7 +127,7 @@ const Rates = () => {
                 >
                   <Form>
                     <Box>
-                      <Field as={TextField} name="name" label="Customer Name" select fullWidth>
+                      <Field as={TextField} name="customerID" label="Customer Name" select fullWidth>
                         {custList.customers.map((customer) => (
                           <MenuItem key={customer.id} value={customer.id}>
                             {customer.companyName}

@@ -6,11 +6,13 @@ import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConf
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 //import javax.servlet.Filter;
 
+@EnableAsync
 @Configuration
 @SpringBootApplication(exclude = {ErrorMvcAutoConfiguration.class})
 @EnableWebMvc

@@ -11,7 +11,7 @@ public class QuoteEvent {
     private JsonNode quote;
 
     public QuoteEvent(JsonNode quote) {
-        quote = this.quote;
+        this.quote = quote;
     }
 
     public JsonNode getQuote() {
