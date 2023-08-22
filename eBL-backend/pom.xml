@@ -252,6 +252,12 @@
             <type>pom</type>
         </dependency>
 
+        <dependency>
+            <groupId>org.eclipse.rdf4j</groupId>
+            <artifactId>rdf4j-spring</artifactId>
+            <version>4.3.5</version>
+        </dependency>
+
     </dependencies>
 
     <repositories>
