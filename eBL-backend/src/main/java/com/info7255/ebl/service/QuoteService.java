@@ -11,7 +11,12 @@ import com.info7255.ebl.resource.VCARD;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.jena.fuseki.main.FusekiServer;
 import org.apache.jena.rdf.model.*;
+import org.apache.jena.update.UpdateExecutionFactory;
+import org.apache.jena.update.UpdateFactory;
+import org.apache.jena.update.UpdateProcessor;
+import org.apache.jena.update.UpdateRequest;
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.query.*;
@@ -37,6 +42,7 @@ import java.lang.reflect.Method;
 public class QuoteService {
 
     ObjectMapper objectMapper = new ObjectMapper();
+
 
     private final ApplicationEventPublisher publisher;
 
@@ -132,7 +138,15 @@ public class QuoteService {
 
         model.write(System.out, "TURTLE");
 
+        String fusekiServiceUrl = "http://localhost:3030/dataset/update";
 
+        String insertQuery = "INSERT DATA { GRAPH <http://example.com/graph> { " +
+                portPair +
+                " } }";
+
+        UpdateRequest updateRequest = UpdateFactory.create(insertQuery);
+        UpdateProcessor updateProcessor = UpdateExecutionFactory.createRemote(updateRequest, fusekiServiceUrl);
+        updateProcessor.execute();
 
 
         log.info("RDF created", portPair);
